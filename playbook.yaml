@@ -1,6 +1,6 @@
 - hosts: all
   vars_files:
-    - secrets_vars.yaml
+    - vars.yaml
   roles:
     - role: kyl191.openvpn
       # openvpn_uninstall: true
@@ -19,7 +19,7 @@
       openvpn_client_to_client: true
       openvpn_addl_client_options:
         - "block-outside-dns"
-      openvpn_diff_client_port: true
+      openvpn_diff_client_port: "{{ proxy_bool }}"
       openvpn_client_port: "{{ proxy_port }}"
       clients:
         - client1
