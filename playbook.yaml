@@ -1,0 +1,27 @@
+- hosts: all
+  vars_files:
+    - secrets_vars.yaml
+  roles:
+    - role: kyl191.openvpn
+      # openvpn_uninstall: true
+      openvpn_sync_certs: true
+      openvpn_use_pregenerated_dh_params: true
+      openvpn_ovpn_dir: "/etc/openvpn/ovpn"
+      openvpn_server_hostname: "{{ proxy_hostname }}"
+      openvpn_port: "{{ server_port }}"
+      openvpn_proto: "tcp"
+      openvpn_compression: ""
+      openvpn_set_dns: true
+      openvpn_custom_dns: true
+      openvpn_dns_servers: 
+        - 10.64.7.184
+        - 10.64.7.185
+      openvpn_client_to_client: true
+      openvpn_addl_client_options:
+        - "block-outside-dns"
+      openvpn_diff_client_port: true
+      openvpn_client_port: "{{ proxy_port }}"
+      clients:
+        - client1
+        - client2
+        - client3
