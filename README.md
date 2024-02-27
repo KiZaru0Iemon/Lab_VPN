@@ -42,6 +42,9 @@ all:
 proxy_hostname: "proxy.com"
 server_port: 1194
 proxy_bool: false
+clients_list:
+  - client1
+  - client2
 ```
 VPNサーバについて、研究室内でのポートとポートフォワード先とのポートが異なる場合は`proxy_bool: true`とし，`proxy_port: [port number]`とすることで設定できる。
 
@@ -53,4 +56,15 @@ ansible-playbook -i hosts.yaml playbook.yaml
 ## 運用
 `playbook.yaml`内の一番下のclientsの項目を増やして、デプロイすれば新しい鍵を作成することができる。鍵はサーバ側の`/etc/openvpn/ovpn`にあり，それを配布すればよい。
 
-ユーザ側には，VPNクライアントアプリを入れてもらい，渡した鍵を登録してもらうだけで接続できる。認証が通らない場合は、Firewallを編集し，VPNサーバで利用しているポートを開放すればおそらくできる。
+ユーザ側には，VPNクライアントアプリを入れてもらい，渡した鍵を登録してもらうだけで接続できる。
+
+1. VPNクライアント用のソフトをダウンロード
+  - Windows: "OpenVPN GUI for Windows"をいれる
+  - Android: "OpenVPN Connect"をいれる
+  - Ubuntu: 標準でOpenVPNを利用できるため、追加でアプリを入れる必要はない
+2. サーバ管理者から鍵(ovpnファイル)をもらう
+3. クライアント用のソフトの既定の位置に鍵を入れる
+4. 接続をし、使用するPublic IPがサーバのあるIPに変化すれば接続成功
+
+### 接続できない場合
+- Firewallが接続を拒否している可能性がある。この場合は、サーバ管理者にあけるべきportを確認して開放後、再度接続。

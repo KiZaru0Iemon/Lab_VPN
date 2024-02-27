@@ -21,7 +21,4 @@
         - "block-outside-dns"
       openvpn_diff_client_port: "{{ proxy_bool }}"
       openvpn_client_port: "{{ proxy_port }}"
-      clients:
-        - client1
-        - client2
-        - client3
+      clients: "{{ clients_list }}"
